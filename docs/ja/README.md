@@ -4,13 +4,14 @@
 
 ## はじめに
 
-- [ユーザーガイド](guide.md)
-- [メンテナーハンドオフ](maintainer-handoff.md)
+- [概要](overview.md) — RLLとは何か、何ができるか、どのように動作するか
+- [ユーザーガイド](guide.md) — インストールから初回セッションまで
+- [メンテナーハンドオフ](maintainer-handoff.md) — RLLプロジェクトのメンテナンス引き継ぎ
 
 ## リファレンス
 
-- [CLIリファレンス](reference.md)
-- [FAQ](faq.md)
+- [CLIリファレンス](reference.md) — 全コマンドリファレンス
+- [FAQ](faq.md) — よくある質問とトラブルシューティング
 
 ## テスト
 

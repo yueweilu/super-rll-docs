@@ -18,6 +18,13 @@
   },
   "pages": [
     {
+      "slug": "overview",
+      "group": "Start",
+      "page_type": "standard",
+      "nav_hidden": false,
+      "title": "Overview"
+    },
+    {
       "slug": "guide",
       "group": "Start",
       "page_type": "standard",

@@ -4,13 +4,14 @@
 
 ## 入门
 
-- [用户指南](guide.md)
-- [维护者交接](maintainer-handoff.md)
+- [概览](overview.md) — RLL 是什么、能做什么、怎么运作
+- [用户指南](guide.md) — 从安装到跑通第一个会话
+- [维护者交接](maintainer-handoff.md) — 接手维护 RLL 项目
 
 ## 参考
 
-- [CLI 参考](reference.md)
-- [常见问题](faq.md)
+- [CLI 参考](reference.md) — 完整命令参考
+- [常见问题](faq.md) — 常见问题与排查
 
 ## 测试
 

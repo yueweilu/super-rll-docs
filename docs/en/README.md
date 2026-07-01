@@ -4,13 +4,14 @@
 
 ## Start
 
-- [User Guide](guide.md)
-- [Maintainer Handoff](maintainer-handoff.md)
+- [Overview](overview.md) — What RLL is, what it can do, and how it works
+- [User Guide](guide.md) — From installation to your first session
+- [Maintainer Handoff](maintainer-handoff.md) — Taking over RLL project maintenance
 
 ## Reference
 
-- [CLI Reference](reference.md)
-- [FAQ](faq.md)
+- [CLI Reference](reference.md) — Complete command reference
+- [FAQ](faq.md) — Common questions and troubleshooting
 
 ## Testing
 
