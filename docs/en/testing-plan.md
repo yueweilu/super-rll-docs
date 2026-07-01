@@ -1,402 +1,227 @@
-# Ralph-Lisa Loop v0.4.0 — Complete Test Plan
+# Super RLL v0.26.1 — Test Plan
 
 ## Overview
 
-This plan covers all features from the v0.4.0 release cycle:
-- Fix A: TmuxUI file-tail rewrite
-- Fix B: Transport debug logging
-- Fix C: Codex 0.40+ compatibility (sandbox + UUID + threadId)
-- Fix D: Transport → UI direct streaming
-- P0: watch-lisa (persistent connection watcher)
-- P1: ralph-lisa review (stateless one-shot)
-- P2: Git post-commit hook
-- P4: MCP truncation + handoff fixes
-- P5: Multi-IDE rule files (Windsurf, Cline)
-- P6: IDE Integration documentation
-- Layer 2: Phase completion triggers in Ralph template
+This plan covers the full test surface of the current v0.26.1 release. The project spans ~550 source test files across 5 packages, governed by an 8-tier canonical test system and 15+ quality gates.
+
+**Packages under test:**
+
+| Package | Test Files | Focus |
+|---------|-----------|-------|
+| `cli/` | 395 | Core CLI, commands, policy, gates, plan validation |
+| `cli-e2e/` | 16 | End-to-end CLI behavior, WezTerm/Playwright harnesses |
+| `wecom-bot/` | 28 | WeCom inbound/outbound, message routing, daemon |
+| `cli-pty-daemon/` | 5 | PTY management, terminal sessions, tmux integration |
+| `cli-pty-daemon-vscode/` | 1 | VSCode extension PTY bridge |
 
 ---
 
-## 1. Prerequisites
+## 8-Tier Canonical Test System
 
-### Mac
+The project defines 8 canonical tiers in `gate-manifest.json`. The CLI archetype's default baseline is `[unit, smoke, integration]`.
+
+| Tier | Scope | When Required |
+|------|-------|---------------|
+| **unit** | Pure function / module tests | Every phase |
+| **smoke** | Fast integration sanity | impl + consensus phases |
+| **functional** | Feature-level behavior | Complex slices |
+| **integration** | Cross-package interaction | consensus phase |
+| **e2e** | Full user workflow | Release validation |
+| **perf** | Performance benchmarks | Perf-sensitive changes |
+| **stability** | Soak / stress / race | Long-running services |
+| **security** | Auth / secret scan / injection | Security-sensitive changes |
+
+**Phase-based requirements** (from `gate-manifest.json` phases):
+- `design` → unit only
+- `tests-only` → unit only
+- `impl` → unit + smoke
+- `fix` → unit only
+- `consensus` → unit + smoke + integration
+
+---
+
+## Quality Gates
+
+### Submit-Time Gates (every [CODE]/[FIX])
+
+| Gate | § Ref | What It Checks |
+|------|-------|----------------|
+| Policy block-default | §133 | Missing attest, test results, file:line citations |
+| Test execution log | §137 | Test claims vs actual execution log entries |
+| Bidirectional attest | §149 | Ralph Test-Process / Test-Cases / Test-Results + Lisa Reviewed-* / Verified |
+| Visual evidence | §151 | Screenshot required for UI/frontend slices |
+| Project type tiers | §152 | Baseline vs archetype mismatch (warn-only) |
+| Smoke auto-loop | §150 | RL_SMOKE_CMD post-submit health check |
+
+### Plan-Time Gates (TDD-PLAN round)
+
+| Gate | § Ref | What It Checks |
+|------|-------|----------------|
+| Complexity judge | §123 | 3-layer: LLM judgement → deterministic verify → Lisa rerun |
+| Clarify phase | §128 | Complex/expert tasks need R0 5-stage grill before TDD-PLAN |
+| Phase test coverage | §145 | Multi-phase slices need per-phase test cases |
+| Baseline self-check | §155 | PLAN body must confirm project_type baseline alignment |
+
+### Release Gates
+
+| Gate | § Ref | Coverage |
+|------|-------|----------|
+| Dogfood gate | §139 | E2E enforcement check: happy path, fake claims, missing Verified |
+| Doc update gate | §138 | Doc/code drift detection across CLAUDE.md / CODEX.md / role templates |
+| Release report | §140 | Aggregated evidence: tests + plan + dogfood + doc-update + complexity |
+| Test harness confirmation | §157 | Real-scenario, repetition justification, design ≠ mechanism review |
+
+---
+
+## Test Harnesses
+
+### Node.js Built-in (`node --test`)
+
+The primary test runner. All `cli/src/test/*.test.ts` files use Node.js native test runner.
 
 ```bash
-node -v          # >= 18
-git --version
-claude --version # Claude Code CLI
-codex --version  # Codex CLI
-tmux -V          # for --ui tmux tests
+cd cli && npm test
 ```
 
-### Windows
+Covers: commands, policy, plan validation, gate execution, IPC, state management.
 
-```powershell
+### WezTerm E2E Harness
+
+Drives a real terminal via WezTerm for CLI end-to-end tests. Specs live in `cli-e2e/`.
+
+```bash
+ralph-lisa skill wezterm-test --macro <path>
+```
+
+Covers: CLI output rendering, tmux pane behavior, user interaction flows.
+
+### Playwright Browser E2E
+
+Browser automation harness. Specs in `harness-project-validation/` and `harness-verification/`.
+
+```bash
+ralph-lisa skill playwright-test --spec <path>
+```
+
+### Dogfood Gate (§139)
+
+Self-testing the enforcement gates themselves. Validates:
+- `happy`: Full PLAN→CODE→PASS→CONSENSUS flow
+- `bypass-fake-claim`: §137 test-results-unverified catches fake claims
+- `bypass-missing-Verified`: §144 lisa-rerun-not-verified catches missing cites
+
+### Release Report (§140)
+
+Pre-release evidence aggregation from 6 sources: cli tests, wecom-bot tests, plan validation, dogfood gate, doc-update gate, complexity judge.
+
+---
+
+## Key Test Areas by Feature
+
+| Area | § / Feature | Test Coverage |
+|------|-------------|---------------|
+| Commands | auto, start, submit-ralph/lisa, init/uninit | cli/src/test/commands*.test.ts |
+| Policy | §133/§137/§144/§149 | cli/src/test/policy*.test.ts |
+| Plan validation | §102/§145 plan table parsing | cli/src/test/plan*.test.ts |
+| Complexity | §123 judge + verify | cli/src/test/complexity*.test.ts |
+| Gates cascade | §78/§79 tier cascade + loopback | cli/src/test/gate*.test.ts |
+| WeCom transport | inbound/outbound, push, daemon | wecom-bot/src/test/*.test.ts |
+| PTY daemon | tmux session, pipe-pane, attach | cli-pty-daemon/src/test/*.test.ts |
+| Feishu relay | Lark outbound, decision-card | cli/src/test/feishu*.test.ts |
+| Docs publisher | Publication workflow | cli/src/test/docs-publisher*.test.ts |
+| Cleanup | §127 spawn/fork cleanup | cli/src/test/cleanup*.test.ts |
+| Knowledge freshness | §128 volatile info TTL | cli/src/test/knowledge*.test.ts |
+
+---
+
+## Quality Oracle (15 Dimensions)
+
+From `gate-manifest.json` `canonical_doc_oracle_dimensions`:
+
+1. **data-accuracy** — Facts match sources
+2. **source-authority** — Citations reference primary sources
+3. **source-freshness** — Information is current (TTL-aware)
+4. **logical-coherence** — No internal contradictions
+5. **compliance-with-user-spec** — Matches stated requirements
+6. **ai-slop** — No AI-generated filler or hallucinations
+7. **style** — Consistent voice and formatting
+8. **topic-coverage** — All declared scope is addressed
+9. **depth-detail** — Appropriate level of detail per audience
+10. **public-safety** — No leaked secrets, safe for public consumption
+11. **locale-parity** — en/zh-CN/ja content is synchronized
+12. **link-integrity** — All cross-references resolve
+13. **build-readiness** — Content compiles/deploys without errors
+14. **destination-liveness** — External links are reachable
+15. **public-authorization** — Published content is authorized for public access
+
+---
+
+## Prerequisites
+
+- **Node.js** >= 18
+- **Claude Code** (Ralph backend)
+- **Codex CLI** (Lisa backend)
+- Optional: `tmux` (for tmux UI), `wezterm` (for WezTerm E2E), `playwright` (for browser E2E)
+
+```bash
 node -v          # >= 18
 git --version
 claude --version
 codex --version
-echo $env:WT_SESSION  # non-empty if inside Windows Terminal
+ralph-lisa doctor  # full environment check
 ```
 
 ---
 
-## 2. Automated Tests (Run First)
+## Running Tests
+
+### Quick check
 
 ```bash
-cd cli
-npm run build
-npm test
+cd cli && npm test
 ```
 
-**Expected**: 627/627 pass, 0 fail
-
----
-
-## 3. Init / Uninit (All Platforms)
-
-### 3.1 Init creates all IDE files
+### Full gate sequence
 
 ```bash
-mkdir /tmp/rll-test-init && cd /tmp/rll-test-init && git init
-ralph-lisa init    # or: node <path>/cli/dist/cli.js init
+ralph-lisa quality-gate --full-uaot
 ```
 
-**Verify**:
-- [ ] `CLAUDE.md` exists, contains `RALPH-LISA-LOOP` marker
-- [ ] `.cursorrules` exists, contains marker
-- [ ] `.windsurfrules` exists, contains marker
-- [ ] `.clinerules` exists, contains marker
-- [ ] `.github/copilot-instructions.md` exists, contains marker
-- [ ] `CODEX.md` exists, contains marker
-- [ ] `.git/hooks/post-commit` exists, contains `ralph-lisa review`
-- [ ] `.dual-agent/` directory exists with turn.txt, round.txt, step.txt
-- [ ] Console shows all files created + usage instructions (IDE / CLI / one-shot)
-
-### 3.2 Phase completion triggers in template
+### Pre-release checklist
 
 ```bash
-grep "When to Submit" CLAUDE.md
-grep "Phase Completion Triggers" .cursorrules
+npm test --prefix cli           # core tests
+npm test --prefix wecom-bot     # wecom transport
+ralph-lisa dogfood-gate run --strict   # enforcement E2E
+ralph-lisa doc-update-gate run --strict # doc/code drift
+ralph-lisa release-report emit          # aggregate evidence
 ```
 
-**Verify**:
-- [ ] Both files contain the mandatory triggers table (PLAN/CODE/FIX/commit/CONSENSUS)
-- [ ] Both mention `auto-review.md` advisory channel
-
-### 3.3 Re-init is idempotent
+### Gate policy mode
 
 ```bash
-ralph-lisa init   # run again
+# Default: block (production / autonomous)
+RL_POLICY_MODE=block ralph-lisa auto --engine --task "..."
+
+# Dev escape: warn (interactive development only)
+RL_POLICY_MODE=warn ralph-lisa submit-ralph --file .dual-agent/submit.md
 ```
-
-**Verify**:
-- [ ] Console shows "Updating" not "Creating" for existing files
-- [ ] File contents are fresh (latest template)
-- [ ] No duplicate marker blocks
-
-### 3.4 Uninit cleans everything
-
-```bash
-ralph-lisa uninit
-```
-
-**Verify**:
-- [ ] `CLAUDE.md` removed (or cleaned if had pre-existing content)
-- [ ] `.cursorrules` removed
-- [ ] `.windsurfrules` removed
-- [ ] `.clinerules` removed
-- [ ] `.github/copilot-instructions.md` removed
-- [ ] `CODEX.md` removed
-- [ ] `.git/hooks/post-commit` removed
-- [ ] `.dual-agent/` removed
-- [ ] `.claude/` cleaned
-- [ ] `.codex/` cleaned
-
----
-
-## 4. Engine Mode — Quiet (Mac + Windows)
-
-### 4.1 Ralph=Claude, Lisa=Codex
-
-```bash
-mkdir /tmp/rll-test-quiet && cd /tmp/rll-test-quiet && git init
-ralph-lisa auto --engine --ralph-backend claude --lisa-backend codex \
-  --task "say hello and exit" --max-rounds 3 --auto-approve --debug --ui quiet
-```
-
-**Verify**:
-- [ ] Ralph connected, Lisa connected
-- [ ] Round 1: Ralph [PLAN], Lisa responds with tag ([NEEDS_WORK] or [PASS])
-- [ ] Round 2+: Ralph responds, Lisa responds
-- [ ] No `invalid type: boolean false` errors (Fix C v1)
-- [ ] No `Failed to parse thread_id` errors (Fix C v1)
-- [ ] No `Session not found` errors (Fix C follow-up)
-- [ ] Debug logs created in `.dual-agent/debug/`:
-  - [ ] `coordinator.log` has prompt_sent/prompt_response events
-  - [ ] `ralph-raw-io.log` has spawn/stdin_raw/stdout_raw/exit events
-  - [ ] `lisa-raw-io.log` has spawn/stdin_raw/stdout_raw/exit + `thread_id_adopted` event
-- [ ] Exit with max-rounds or consensus (not crash)
-
-### 4.2 Windows-specific checks
-
-- [ ] Run from local drive (D:\), not SMB share (Z:) — avoids EBADF
-- [ ] DEP0190 warning appears but doesn't break functionality
-- [ ] `.dual-agent/debug/*.log` files are non-empty
-
----
-
-## 5. Engine Mode — tmux (Mac Only)
-
-```bash
-mkdir /tmp/rll-test-tmux && cd /tmp/rll-test-tmux && git init
-ralph-lisa auto --engine --ralph-backend claude --lisa-backend codex \
-  --task "say hello" --max-rounds 3 --auto-approve --ui tmux
-```
-
-Then in another terminal: `tmux attach -t rll-engine`
-
-**Verify**:
-- [ ] tmux session created, attach works
-- [ ] Left pane: Ralph's **full submission text** streams live (not just `─── [TAG] Round N ───` divider)
-- [ ] Right pane: Lisa's **full review text** streams live
-- [ ] No `zsh: command not found` errors in panes (Fix A)
-- [ ] Status bar shows `Round N | turn | step | status`
-- [ ] Special characters in submissions render correctly ([CODE], $HOME, backticks)
-
----
-
-## 6. Engine Mode — wt (Windows Only)
-
-Must run inside Windows Terminal:
-
-```powershell
-mkdir D:\temp\rll-test-wt; cd D:\temp\rll-test-wt; git init
-node <path>\cli\dist\cli.js auto --engine --ralph-backend claude --lisa-backend codex `
-  --task "say hello" --max-rounds 3 --auto-approve --ui wt
-```
-
-**Verify**:
-- [ ] Windows Terminal opens a new tab with two panes
-- [ ] Left pane: Ralph output streams (not garbled — UTF-8 fix)
-- [ ] Right pane: Lisa output streams
-- [ ] No PowerShell `;` parsing errors (script-file fix)
-- [ ] Fallback: running outside WT shows warning + falls back to split mode
-
----
-
-## 7. run-lisa (Single Round)
-
-```bash
-cd /tmp/rll-test-init   # a project with init done
-ralph-lisa init
-# Submit some work as Ralph
-echo "[PLAN] Test plan for hello world" > .dual-agent/submit.md
-ralph-lisa submit-ralph --file .dual-agent/submit.md
-# Now run Lisa
-ralph-lisa run-lisa --lisa-backend codex --auto-approve
-```
-
-**Verify**:
-- [ ] Lisa connects and returns a review to stdout
-- [ ] Review contains a tag ([PASS] or [NEEDS_WORK])
-- [ ] `.dual-agent/review.md` is updated
-- [ ] `turn.txt` flips back to `ralph`
-
----
-
-## 8. watch-lisa (Persistent Watcher)
-
-### Terminal 1:
-
-```bash
-cd /tmp/rll-test-init
-ralph-lisa watch-lisa --lisa-backend codex --auto-approve
-```
-
-**Verify**:
-- [ ] Console shows "Lisa connected — watching for Ralph's submissions"
-- [ ] Process stays alive (doesn't exit)
-
-### Terminal 2:
-
-```bash
-cd /tmp/rll-test-init
-echo "[PLAN] Watch test plan" > .dual-agent/submit.md
-ralph-lisa submit-ralph --file .dual-agent/submit.md
-```
-
-**Verify in Terminal 1**:
-- [ ] Watcher detects turn change: `📥 Ralph [PLAN] Round N — sending to Lisa...`
-- [ ] Lisa responds: `📤 Lisa [NEEDS_WORK/PASS] Round N — review written`
-- [ ] Watcher continues watching (doesn't exit)
-
-### Round 2 (same Terminal 2):
-
-```bash
-echo "[FIX] Addressing Lisa's feedback" > .dual-agent/submit.md
-ralph-lisa submit-ralph --file .dual-agent/submit.md
-```
-
-**Verify**:
-- [ ] Watcher picks up again automatically
-- [ ] Lisa has context from Round 1 (persistent connection — mentions previous review)
-
-### Error recovery:
-
-- [ ] Ctrl+C in Terminal 1: "Stopping Lisa watcher... Lisa disconnected." clean exit
-- [ ] If Lisa transport errors: watcher logs error but continues (doesn't crash)
-
----
-
-## 9. review (Stateless One-Shot)
-
-### 9.1 With changes
-
-```bash
-cd /tmp/rll-test-init
-echo "console.log('hello')" > hello.js
-git add hello.js
-ralph-lisa review --auto-approve --lisa-backend codex
-```
-
-**Verify**:
-- [ ] Review output appears on stdout
-- [ ] Contains [PASS] or [NEEDS_WORK] tag
-- [ ] References the actual file changes
-
-### 9.2 With --scope
-
-```bash
-echo "test" > src/test.js
-git add src/test.js
-ralph-lisa review --auto-approve --scope "src/"
-```
-
-**Verify**:
-- [ ] Review only covers `src/` changes
-- [ ] Does NOT fall back to unscoped diff if `src/` has no changes (reports error instead)
-
-### 9.3 No changes
-
-```bash
-git stash  # clear all changes
-ralph-lisa review --auto-approve
-```
-
-**Verify**:
-- [ ] Error message: "no changes found"
-- [ ] Exit code non-zero
-
-### 9.4 Security: scope injection
-
-```bash
-ralph-lisa review --scope '$(echo pwned)'
-```
-
-**Verify**:
-- [ ] No shell command execution (execFileSync prevents injection)
-- [ ] Either reviews files matching literal path or reports no changes
-
----
-
-## 10. Git Post-Commit Hook
-
-```bash
-cd /tmp/rll-test-init
-ralph-lisa init
-echo "test" > hooktest.txt
-git add hooktest.txt
-git commit -m "test hook"
-```
-
-**Verify**:
-- [ ] Console shows `[ralph-lisa] Post-commit: triggering Lisa review...`
-- [ ] After ~30-60 seconds, `.dual-agent/auto-review.md` contains a review
-- [ ] Review does NOT appear on terminal stdout (redirected to file)
-
----
-
-## 11. MCP Server
-
-```bash
-ralph-lisa mcp-server
-```
-
-Send JSON-RPC via stdin:
-```json
-{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0.0"}}}
-```
-
-**Verify**:
-- [ ] Server responds with valid initialize result
-- [ ] `rll_lisa_review` returns full review (not truncated to 500 chars — P4 fix)
-- [ ] `rll_handoff` returns `final_work` and `final_review` fields (P4 fix)
-
----
-
-## 12. Debug Logging (--debug)
-
-Run any engine command with `--debug`:
-
-```bash
-ralph-lisa auto --engine --task "test" --max-rounds 2 --auto-approve --debug --ui quiet
-```
-
-**Verify**:
-- [ ] Console shows `🔎 Debug logging enabled → <path>/debug/`
-- [ ] `coordinator.log`: NDJSON with prompt_sent, prompt_response, resend_attempt (if any)
-- [ ] `ralph-raw-io.log`: spawn, stdin_raw (full payload, not truncated), stdout_raw, exit
-- [ ] `lisa-raw-io.log`: same + thread_id_adopted event
-- [ ] Raw payloads are NOT truncated (no `...truncated N chars` in transport logs)
-- [ ] Coordinator previews ARE truncated (promptPreview, outputPreview — expected)
-
----
-
-## 13. Cross-Platform Path Handling
-
-### Mac/Linux
-- [ ] All paths use `/` separator
-- [ ] `os.tmpdir()` used (not hardcoded `/tmp`)
-
-### Windows
-- [ ] Paths work with `\` separator
-- [ ] No EBADF errors on local drives
-- [ ] SMB drives (Z:) work for code but NOT for state files (known limitation, documented)
-
----
-
-## 14. Documentation Verification
-
-```bash
-# Check all three languages have IDE Integration chapter
-grep "IDE Integration" docs/en/guide.md
-grep "IDE 集成" docs/zh-CN/guide.md
-grep "IDE 連携" docs/ja/guide.md
-```
-
-**Verify**:
-- [ ] All three contain: Quick Start, How It Works, One-Shot Review, Modes Overview table
-- [ ] FAQ mentions Win10 22H2 support
-- [ ] FAQ describes WT_SESSION requirement for --ui wt
-- [ ] FAQ mentions Git is recommended (not required)
 
 ---
 
 ## Test Result Summary
 
-| # | Test Area | Mac | Windows | Pass/Fail |
-|---|-----------|-----|---------|-----------|
-| 2 | Automated tests (627) | | | |
-| 3 | Init / Uninit | | | |
-| 4 | Engine quiet | | | |
-| 5 | Engine tmux | | N/A | |
-| 6 | Engine wt | N/A | | |
-| 7 | run-lisa | | | |
-| 8 | watch-lisa | | | |
-| 9 | review one-shot | | | |
-| 10 | Git hook | | | |
-| 11 | MCP server | | | |
-| 12 | Debug logging | | | |
-| 13 | Cross-platform paths | | | |
-| 14 | Documentation | | | |
+| # | Test Area | Runner | Gate Tier |
+|---|-----------|--------|-----------|
+| 1 | CLI unit tests (~395 files) | node --test | unit |
+| 2 | CLI E2E tests (~16 files) | wezterm / playwright | e2e |
+| 3 | WeCom bot tests (~28 files) | node --test | unit + integration |
+| 4 | PTY daemon tests (~5 files) | node --test | unit + smoke |
+| 5 | Dogfood gate (§139) | ralph-lisa dogfood-gate | e2e |
+| 6 | Doc update gate (§138) | ralph-lisa doc-update-gate | functional |
+| 7 | Release report (§140) | ralph-lisa release-report | integration |
+| 8 | Test harness confirmation (§157) | ralph-lisa testharness-gate | functional |
+
+---
+
+> This plan reflects the v0.26.1 test surface. For per-slice test planning, see the [User Guide](guide.html) §102 auto-TDD mode and the [CLI Reference](reference.html).
