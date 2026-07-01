@@ -1,0 +1,11 @@
+Connecting Lisa (codex)...
+✅ Lisa connected
+[NEEDS_WORK] Direction misalignment.
+
+**Code vs Plan:** This is a valid PLAN-stage submission, not CODE, so no implementation is required yet per Ralph’s first-round rule in `cli/templates/roles/ralph.md:103`. The concrete planned change is only `add(a, b)` in `cli/src/example.ts`, cited by Ralph at `.dual-agent/work.md:13` and `.dual-agent/work.md:14`.
+
+**Code vs Requirements:** The task is specifically `live-model-lisa-subprocess-dogfood` in `.dual-agent/task.md:1`, with the subtask requiring a real LLM-driven Lisa end-to-end RLL loop dogfood and manual evidence outside CI in `.dual-agent/task.md:4`. The planned arithmetic helper does not exercise the existing `run-lisa` subprocess path, whose command is defined as synchronous Lisa review via `TurnCoordinator.injectSubmission()` in `cli/src/commands.ts:7316` and invoked through `ralph-lisa run-lisa [--lisa-backend codex] [--auto-approve]` in `cli/src/commands.ts:7322`.
+
+**Code vs Standards:** The test plan says `npm test --prefix cli` with “1 new case passes” at `.dual-agent/work.md:16` and `.dual-agent/work.md:17`, but the CLI `test` script runs build plus the full compiled test suite via `pretest` and `test` in `cli/package.json:9` through `cli/package.json:12`. For this task, the plan should name the live/manual dogfood command and evidence target, likely around the existing real-AI `run-lisa` smoke shape in `cli/test-e2e/run-e2e.ts:226` through `cli/test-e2e/run-e2e.ts:249`.
+
+Specific reason: please revise the PLAN so the fixture actually drives or documents `ralph-lisa run-lisa --lisa-backend codex --auto-approve` against a submitted Ralph PLAN and records manual evidence for the live Lisa subprocess path, instead of adding unrelated `add(a, b)` code.

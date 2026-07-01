@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html><head><style>
+html { background: #FFFFFF; }
+body { width: 720pt; height: 405pt; margin: 0; padding: 0; font-family: Arial, sans-serif; display: flex; flex-direction: column; }
+.header { background: #1B2631; padding: 18pt 40pt; }
+.header h1 { color: #FFFFFF; font-size: 22pt; margin: 0; }
+.header .accent { width: 50pt; height: 3pt; background: #F39C12; margin: 6pt 0 0 0; }
+.content { display: flex; flex: 1; padding: 12pt 40pt; gap: 18pt; }
+.left { flex: 1; }
+.left h2 { color: #0D7377; font-size: 14pt; margin: 0 0 6pt 0; }
+.card { background: #F8F9FA; border-radius: 6pt; padding: 8pt 10pt; margin: 5pt 0; }
+.card h3 { color: #1B2631; font-size: 11pt; margin: 0 0 2pt 0; }
+.card p { color: #34495E; font-size: 9pt; margin: 1pt 0; }
+.right { flex: 1; }
+.right h2 { color: #E74C3C; font-size: 14pt; margin: 0 0 6pt 0; }
+.wrong { background: #FDEDEC; border-radius: 6pt; padding: 8pt 10pt; margin: 5pt 0; }
+.wrong h3 { color: #E74C3C; font-size: 11pt; margin: 0 0 2pt 0; }
+.wrong p { color: #34495E; font-size: 9pt; margin: 1pt 0; }
+.right h2.sub { color: #0D7377; margin: 8pt 0 4pt 0; }
+.correct { background: #E8F8F5; border-radius: 6pt; padding: 8pt 10pt; }
+.correct p { color: #34495E; font-size: 9pt; margin: 1pt 0; }
+</style></head><body>
+<div class="header">
+  <h1>知识工程：Markdown + Git，而非 RAG 中心（Q3）</h1>
+  <div class="accent"></div>
+</div>
+<div class="content">
+  <div class="left">
+    <h2>知识体系四支柱</h2>
+    <div class="card">
+      <h3>Markdown 知识文件</h3>
+      <p>业务规则/架构决策/接口契约全部 Markdown 承载</p>
+      <p>AI 直接读文件，无需向量化步骤</p>
+    </div>
+    <div class="card">
+      <h3>Git 版本管理</h3>
+      <p>所有知识变更可追溯、可 diff、可回滚</p>
+      <p>不同团队不同仓库，天然权限隔离</p>
+    </div>
+    <div class="card">
+      <h3>Context 规范注入</h3>
+      <p>CLAUDE.md 定义项目规范，AI 启动时自动加载</p>
+    </div>
+    <div class="card">
+      <h3>MCP 工具暴露</h3>
+      <p>AI 直接调用内部 API 获取实时数据</p>
+    </div>
+  </div>
+  <div class="right">
+    <h2>RAG 不是知识管理方案</h2>
+    <div class="wrong">
+      <h3>RAG 的局限</h3>
+      <p>RAG 是"搜索"，不是"理解"</p>
+      <p>模型需要结构化上下文，不是检索片段</p>
+      <p>缺乏版本管理和协作编辑能力</p>
+    </div>
+    <h2 class="sub">RAG 的正确定位</h2>
+    <div class="correct">
+      <p>RAG 作为辅助检索手段</p>
+      <p>从大量文档中快速定位相关内容</p>
+      <p>但不作为知识体系的骨架</p>
+    </div>
+  </div>
+</div>
+</body></html>

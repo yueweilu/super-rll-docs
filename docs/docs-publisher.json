@@ -1,0 +1,31 @@
+{
+  "productName": "super-rll",
+  "brandName": "Super RLL",
+  "docsBaseUrl": "/super-rll-docs",
+  "publicUrl": "https://yueweilu.github.io/super-rll-docs",
+  "locales": ["en", "zh-CN", "ja"],
+  "sourceRoots": ["docs/"],
+  "forbiddenTerms": [
+    "sk-ant-",
+    "ghp_",
+    "AKIA",
+    "password=",
+    "secret=",
+    "api-key=",
+    "Bearer eyJ",
+    "-----BEGIN RSA PRIVATE KEY-----",
+    "-----BEGIN EC PRIVATE KEY-----"
+  ],
+  "publishRepo": "yueweilu/super-rll-docs",
+  "privatePathPatterns": [
+    "\\.dual-agent/",
+    "\\.env$",
+    "\\.env\\.",
+    "node_modules/",
+    "cli/dist/",
+    "\\.rll/progress/",
+    "credentials\\.json",
+    "\\.pem$",
+    "\\.key$"
+  ]
+}

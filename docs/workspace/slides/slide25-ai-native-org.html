@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html><head><style>
+html { background: #FFFFFF; }
+body { width: 720pt; height: 405pt; margin: 0; padding: 0; font-family: Arial, sans-serif; display: flex; flex-direction: column; }
+.header { background: #1B2631; padding: 18pt 40pt; }
+.header h1 { color: #FFFFFF; font-size: 22pt; margin: 0; }
+.header .accent { width: 50pt; height: 3pt; background: #F39C12; margin: 6pt 0 0 0; }
+.content { flex: 1; padding: 10pt 40pt; display: flex; flex-direction: column; gap: 6pt; }
+.content h2 { color: #1B2631; font-size: 13pt; margin: 0; }
+.table { width: 100%; }
+.row { display: flex; border-bottom: 1pt solid #ECF0F1; }
+.row-h { background: #1B2631; }
+.cell { flex: 1; padding: 6pt 10pt; }
+.cell-dim { flex: 0.7; }
+.row-h .cell p { color: #FFFFFF; font-size: 10pt; font-weight: bold; margin: 0; }
+.cell p { color: #34495E; font-size: 9pt; margin: 0; line-height: 1.3; }
+.cell .old { color: #95A5A6; }
+.cell .new { color: #0D7377; font-weight: bold; }
+.row-alt { background: #F8F9FA; }
+.case { background: #EBF5FB; border-left: 3pt solid #0D7377; padding: 8pt 14pt; margin: 4pt 0 0 0; border-radius: 4pt; }
+.case p { color: #34495E; font-size: 10pt; margin: 0; }
+.case .bold { font-weight: bold; color: #0D7377; }
+</style></head><body>
+<div class="header">
+  <h1>AI 原生组织 vs 传统组织：核心差异</h1>
+  <div class="accent"></div>
+</div>
+<div class="content">
+  <h2>核心差异不是"用了 AI"，是组织结构不同</h2>
+  <div class="table">
+    <div class="row row-h">
+      <div class="cell cell-dim"><p>维度</p></div>
+      <div class="cell"><p>传统组织（加 AI）</p></div>
+      <div class="cell"><p>AI 原生组织</p></div>
+    </div>
+    <div class="row">
+      <div class="cell cell-dim"><p><b>组织形态</b></p></div>
+      <div class="cell"><p><span class="old">金字塔层级，AI 是工具</span></p></div>
+      <div class="cell"><p><span class="new">扁平网络，AI Agent 是团队成员</span></p></div>
+    </div>
+    <div class="row row-alt">
+      <div class="cell cell-dim"><p><b>知识存储</b></p></div>
+      <div class="cell"><p><span class="old">在人的头脑中，随离职消失</span></p></div>
+      <div class="cell"><p><span class="new">Markdown + Git，不随人走</span></p></div>
+    </div>
+    <div class="row">
+      <div class="cell cell-dim"><p><b>决策方式</b></p></div>
+      <div class="cell"><p><span class="old">信息上传 → 上级决策 → 下达</span></p></div>
+      <div class="cell"><p><span class="new">AI 分析 → 一线直接决策</span></p></div>
+    </div>
+    <div class="row row-alt">
+      <div class="cell cell-dim"><p><b>团队定义</b></p></div>
+      <div class="cell"><p><span class="old">人的集合</span></p></div>
+      <div class="cell"><p><span class="new">人 + AI Agent 混合编队</span></p></div>
+    </div>
+    <div class="row">
+      <div class="cell cell-dim"><p><b>扩展方式</b></p></div>
+      <div class="cell"><p><span class="old">加人（边际成本高）</span></p></div>
+      <div class="cell"><p><span class="new">加 Agent（边际成本趋零）</span></p></div>
+    </div>
+    <div class="row row-alt">
+      <div class="cell cell-dim"><p><b>上市速度</b></p></div>
+      <div class="cell"><p><span class="old">基准</span></p></div>
+      <div class="cell"><p><span class="new">快 3.6 倍</span></p></div>
+    </div>
+  </div>
+  <div class="case">
+    <p><span class="bold">案例：</span>OpenAI 4 名工程师 + Codex，28 天从原型到全球发布 Sora Android App。传统团队需 20+ 人、3-6 个月。</p>
+  </div>
+</div>
+</body></html>

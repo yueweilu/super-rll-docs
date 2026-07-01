@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html><head><style>
+html { background: #FFFFFF; }
+body { width: 720pt; height: 405pt; margin: 0; padding: 0; font-family: Arial, sans-serif; display: flex; flex-direction: column; }
+.header { background: #1B2631; padding: 18pt 40pt; }
+.header h1 { color: #FFFFFF; font-size: 22pt; margin: 0; }
+.header .accent { width: 50pt; height: 3pt; background: #F39C12; margin: 6pt 0 0 0; }
+.content { display: flex; flex: 1; padding: 12pt 40pt; gap: 15pt; }
+.left { flex: 1.2; display: flex; flex-direction: column; gap: 6pt; }
+.left h2 { color: #0D7377; font-size: 14pt; margin: 0 0 4pt 0; }
+.phase { border-radius: 6pt; padding: 9pt 12pt; }
+.p1 { background: #E8F8F5; border-left: 3pt solid #27AE60; }
+.p2 { background: #FEF9E7; border-left: 3pt solid #F39C12; }
+.p3 { background: #F8F9FA; border-left: 3pt solid #BDC3C7; }
+.phase h3 { color: #1B2631; font-size: 11pt; margin: 0 0 2pt 0; }
+.phase p { color: #34495E; font-size: 9pt; margin: 1pt 0; }
+.phase .role { color: #0D7377; font-size: 8pt; font-weight: bold; }
+.right { flex: 0.8; }
+.right h2 { color: #1B2631; font-size: 14pt; margin: 0 0 6pt 0; }
+.box { background: #F8F9FA; border-radius: 6pt; padding: 10pt 12pt; margin: 6pt 0; }
+.box h3 { color: #1B2631; font-size: 11pt; margin: 0 0 3pt 0; }
+.box p { color: #34495E; font-size: 9pt; margin: 1pt 0; }
+.recommend { background: #E8F8F5; border: 1pt solid #0D7377; border-radius: 6pt; padding: 8pt 12pt; margin: 8pt 0 0 0; }
+.recommend p { color: #0D7377; font-size: 10pt; margin: 0; font-weight: bold; }
+</style></head><body>
+<div class="header">
+  <h1>AI 运维：分阶段引入，不急于全面铺开</h1>
+  <div class="accent"></div>
+</div>
+<div class="content">
+  <div class="left">
+    <h2>三阶段渐进路径</h2>
+    <div class="phase p1">
+      <h3>阶段一：AI 辅助诊断（推荐先做）</h3>
+      <p>告警降噪：AI 聚合关联告警，人处理事件</p>
+      <p>根因分析：AI 读日志推理根因，人确认处理</p>
+      <p>变更评估：AI 分析影响面，人决定执行</p>
+      <p class="role">人 AI 分工：AI 分析 → 人决策</p>
+    </div>
+    <div class="phase p2">
+      <h3>阶段二：AI 辅助执行（需审批网关）</h3>
+      <p>AI 生成操作方案 → 审批网关展示方案+风险</p>
+      <p>→ 人工一键批准/拒绝 → 自动执行+回滚预案</p>
+      <p class="role">核心业务永远需要人审批</p>
+    </div>
+    <div class="phase p3">
+      <h3>阶段三：智能运维（远期，需数据积累）</h3>
+      <p>故障预测 / 容量规划 / 成本优化</p>
+      <p class="role">需 6-12 个月数据积累才有效</p>
+    </div>
+  </div>
+  <div class="right">
+    <h2>ROI 拐点</h2>
+    <div class="box">
+      <h3>明确 ROI 条件</h3>
+      <p>服务器 > 100 台</p>
+      <p>日均告警 > 50 条</p>
+      <p>运维团队 > 5 人</p>
+    </div>
+    <div class="box">
+      <h3>悟空出行现状</h3>
+      <p>监控全覆盖、告警规模不大</p>
+      <p>部分故障已自动恢复</p>
+    </div>
+    <div class="recommend">
+      <p>建议：只做阶段一</p>
+      <p>告警降噪 + 根因分析即可</p>
+    </div>
+  </div>
+</div>
+</body></html>

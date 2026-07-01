@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html><head><style>
+html { background: #FFFFFF; }
+body { width: 720pt; height: 405pt; margin: 0; padding: 0; font-family: Arial, sans-serif; display: flex; flex-direction: column; }
+.header { background: #1B2631; padding: 18pt 40pt; }
+.header h1 { color: #FFFFFF; font-size: 22pt; margin: 0; }
+.header .accent { width: 50pt; height: 3pt; background: #E74C3C; margin: 6pt 0 0 0; }
+.content { display: flex; flex: 1; padding: 12pt 40pt; gap: 15pt; }
+.col { flex: 1; display: flex; flex-direction: column; gap: 5pt; }
+.col h2 { color: #1B2631; font-size: 13pt; margin: 0 0 4pt 0; }
+.layer { background: #F8F9FA; border-radius: 5pt; padding: 7pt 10pt; border-left: 3pt solid #E74C3C; }
+.layer h3 { color: #1B2631; font-size: 10pt; margin: 0 0 2pt 0; }
+.layer p { color: #34495E; font-size: 8pt; margin: 1pt 0; }
+.col2 h2 { color: #1B2631; font-size: 13pt; margin: 0 0 4pt 0; }
+.data-flow { background: #EBF5FB; border-radius: 5pt; padding: 7pt 10pt; border-left: 3pt solid #0D7377; }
+.data-flow h3 { color: #0D7377; font-size: 10pt; margin: 0 0 2pt 0; }
+.data-flow p { color: #34495E; font-size: 8pt; margin: 1pt 0; }
+.col3 h2 { color: #1B2631; font-size: 13pt; margin: 0 0 4pt 0; }
+.audit { background: #FEF9E7; border-radius: 5pt; padding: 7pt 10pt; border-left: 3pt solid #F39C12; }
+.audit h3 { color: #34495E; font-size: 10pt; margin: 0 0 2pt 0; }
+.audit p { color: #34495E; font-size: 8pt; margin: 1pt 0; }
+.note { background: #FDEDEC; padding: 6pt 14pt; margin: 0 40pt 8pt 40pt; border-radius: 4pt; }
+.note p { color: #E74C3C; font-size: 9pt; margin: 0; font-weight: bold; text-align: center; }
+</style></head><body>
+<div class="header">
+  <h1>安全体系：分层防御 + 纵深控制</h1>
+  <div class="accent"></div>
+</div>
+<div class="content">
+  <div class="col">
+    <h2>网络与部署隔离</h2>
+    <div class="layer">
+      <h3>模型私有部署</h3>
+      <p>核心业务只走内网模型（vLLM + Qwen/DeepSeek）</p>
+    </div>
+    <div class="layer">
+      <h3>网络分区</h3>
+      <p>AI 推理节点独立 VLAN，与生产 DB 隔离</p>
+    </div>
+    <div class="layer">
+      <h3>API Gateway</h3>
+      <p>所有 AI 访问走统一网关：鉴权+限流+日志</p>
+    </div>
+    <div class="layer">
+      <h3>最小权限</h3>
+      <p>MCP 工具声明限定 AI 可访问范围</p>
+      <p>Margay Permission 按工作区隔离</p>
+    </div>
+  </div>
+  <div class="col">
+    <h2>数据流控制</h2>
+    <div class="data-flow">
+      <h3>脱敏网关（入口）</h3>
+      <p>手机号/身份证/银行卡 → 掩码</p>
+      <p>Access Key / Token → 完全过滤</p>
+      <p>业务数据 → 按角色权限放行</p>
+    </div>
+    <div class="data-flow">
+      <h3>输出审计（出口）</h3>
+      <p>Prompt injection 检测</p>
+      <p>敏感信息输出拦截</p>
+    </div>
+    <div class="data-flow">
+      <h3>知识库权限</h3>
+      <p>Markdown + Git 仓库权限管理</p>
+      <p>不同团队不同仓库，天然隔离</p>
+    </div>
+  </div>
+  <div class="col">
+    <h2>审计与合规</h2>
+    <div class="audit">
+      <h3>全量操作日志</h3>
+      <p>每次 AI 调用：输入/输出/时间戳/操作人</p>
+    </div>
+    <div class="audit">
+      <h3>决策可回溯</h3>
+      <p>RLL .dual-agent/ 保存每轮提交和 review</p>
+    </div>
+    <div class="audit">
+      <h3>合规报告</h3>
+      <p>自动生成 AI 使用审计报告</p>
+      <p>调用量 / 异常率 / 敏感触发次数</p>
+    </div>
+    <div class="audit">
+      <h3>内网改造</h3>
+      <p>新增：脱敏代理 + AI 节点 + 审批 API</p>
+      <p>不变：现有监控/网络/审批流程</p>
+    </div>
+  </div>
+</div>
+<div class="note">
+  <p>原则：AI 节点是"只读消费者"，现有基础设施最小改造</p>
+</div>
+</body></html>

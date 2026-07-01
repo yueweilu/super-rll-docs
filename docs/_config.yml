@@ -1,0 +1,35 @@
+# GitHub Pages Jekyll configuration for Super RLL docs
+title: Super RLL
+description: Ralph-Lisa Loop — Two-Agent Collaboration Tool
+baseurl: "/super-rll-docs"
+url: "https://yueweilu.github.io"
+
+# Locale configuration
+defaults:
+  - scope:
+      path: "en"
+    values:
+      lang: en
+  - scope:
+      path: "zh-CN"
+    values:
+      lang: zh-CN
+  - scope:
+      path: "ja"
+    values:
+      lang: ja
+
+# Exclude non-publishable files
+exclude:
+  - docs-publisher.json
+  - .margay/
+  - workspace/
+  - "93-real-lisa-evidence-transcripts/"
+  - research-sources/
+  - "**/*_副本*"
+
+# Markdown processing
+markdown: kramdown
+kramdown:
+  auto_ids: true
+  toc_levels: 2..3

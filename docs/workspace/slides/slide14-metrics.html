@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html><head><style>
+html { background: #FFFFFF; }
+body { width: 720pt; height: 405pt; margin: 0; padding: 0; font-family: Arial, sans-serif; display: flex; flex-direction: column; }
+.header { background: #1B2631; padding: 18pt 40pt; }
+.header h1 { color: #FFFFFF; font-size: 22pt; margin: 0; }
+.header .accent { width: 50pt; height: 3pt; background: #F39C12; margin: 6pt 0 0 0; }
+.content { display: flex; flex: 1; padding: 18pt 40pt; gap: 25pt; }
+.left { flex: 1; }
+.left h2 { color: #1B2631; font-size: 15pt; margin: 0 0 12pt 0; }
+.metric { display: flex; align-items: center; gap: 10pt; margin: 8pt 0; }
+.metric-icon { background: #0D7377; color: #FFFFFF; font-size: 14pt; font-weight: bold; width: 32pt; height: 32pt; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.metric-icon p { margin: 0; color: #FFFFFF; font-size: 14pt; }
+.metric-text { flex: 1; }
+.metric-text h3 { color: #1B2631; font-size: 12pt; margin: 0; }
+.metric-text p { color: #34495E; font-size: 9pt; margin: 2pt 0; }
+.right { flex: 1; }
+.right h2 { color: #1B2631; font-size: 15pt; margin: 0 0 12pt 0; }
+.method { background: #F8F9FA; border-radius: 8pt; padding: 14pt; margin: 8pt 0; }
+.method h3 { color: #0D7377; font-size: 12pt; margin: 0 0 6pt 0; }
+.method p { color: #34495E; font-size: 10pt; margin: 2pt 0; line-height: 1.4; }
+.tip { background: #E8F8F5; border-left: 3pt solid #0D7377; padding: 10pt 14pt; margin: 10pt 0 0 0; }
+.tip p { color: #34495E; font-size: 10pt; margin: 0; }
+</style></head><body>
+<div class="header">
+  <h1>AI 提效量化评估体系（Q16）</h1>
+  <div class="accent"></div>
+</div>
+<div class="content">
+  <div class="left">
+    <h2>五维指标体系</h2>
+    <div class="metric">
+      <div class="metric-icon"><p>1</p></div>
+      <div class="metric-text">
+        <h3>代码交付速度</h3>
+        <p>同类型需求 PR 周期对比 | Git 数据采集</p>
+      </div>
+    </div>
+    <div class="metric">
+      <div class="metric-icon"><p>2</p></div>
+      <div class="metric-text">
+        <h3>缺陷密度</h3>
+        <p>每千行代码 bug 数对比 | Bug 系统采集</p>
+      </div>
+    </div>
+    <div class="metric">
+      <div class="metric-icon"><p>3</p></div>
+      <div class="metric-text">
+        <h3>Review 轮次</h3>
+        <p>平均多少轮通过 review | RLL 自动统计</p>
+      </div>
+    </div>
+    <div class="metric">
+      <div class="metric-icon"><p>4</p></div>
+      <div class="metric-text">
+        <h3>测试覆盖变化</h3>
+        <p>关键路径覆盖率前后对比 | 测试框架采集</p>
+      </div>
+    </div>
+    <div class="metric">
+      <div class="metric-icon"><p>5</p></div>
+      <div class="metric-text">
+        <h3>认知负载</h3>
+        <p>开发者复杂度主观评分 | 问卷采集</p>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <h2>落地方法</h2>
+    <div class="method">
+      <h3>A/B 对比实验</h3>
+      <p>同类需求拆为两组：一组用 AI，一组传统开发</p>
+      <p>同时对比多维指标，消除需求差异干扰</p>
+    </div>
+    <div class="method">
+      <h3>RLL 内建数据</h3>
+      <p>每轮提交自动记录：轮次数、测试结果、Review 通过率</p>
+      <p>无需额外埋点，开箱即用</p>
+    </div>
+    <div class="tip">
+      <p><b>关键：</b>不用"开发周期"单一指标，用指标组合 + A/B 对比</p>
+    </div>
+  </div>
+</div>
+</body></html>

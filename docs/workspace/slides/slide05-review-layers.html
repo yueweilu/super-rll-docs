@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html><head><style>
+html { background: #FFFFFF; }
+body { width: 720pt; height: 405pt; margin: 0; padding: 0; font-family: Arial, sans-serif; display: flex; flex-direction: column; }
+.header { background: #1B2631; padding: 18pt 40pt; }
+.header h1 { color: #FFFFFF; font-size: 22pt; margin: 0; }
+.header .accent { width: 50pt; height: 3pt; background: #F39C12; margin: 6pt 0 0 0; }
+.content { display: flex; flex: 1; padding: 20pt 40pt; gap: 25pt; }
+.left { flex: 1.2; display: flex; flex-direction: column; gap: 10pt; }
+.layer { border-radius: 8pt; padding: 14pt 16pt; }
+.l1 { background: #0D7377; }
+.l1 h2 { color: #FFFFFF; font-size: 14pt; margin: 0 0 4pt 0; }
+.l1 p { color: #D5F5E3; font-size: 10pt; margin: 2pt 0; }
+.l2 { background: #1ABC9C; }
+.l2 h2 { color: #FFFFFF; font-size: 14pt; margin: 0 0 4pt 0; }
+.l2 p { color: #E8F8F5; font-size: 10pt; margin: 2pt 0; }
+.l3 { background: #F39C12; }
+.l3 h2 { color: #FFFFFF; font-size: 14pt; margin: 0 0 4pt 0; }
+.l3 p { color: #FEF9E7; font-size: 10pt; margin: 2pt 0; }
+.right { flex: 0.8; display: flex; flex-direction: column; justify-content: center; }
+.right h2 { color: #1B2631; font-size: 16pt; margin: 0 0 12pt 0; }
+.stat { margin: 8pt 0; }
+.stat-bar { height: 20pt; border-radius: 4pt; display: flex; align-items: center; padding: 0 10pt; }
+.stat-bar p { color: #FFFFFF; font-size: 10pt; font-weight: bold; margin: 0; }
+.stat p.label { color: #34495E; font-size: 10pt; margin: 2pt 0 0 0; }
+.s1 { background: #0D7377; width: 200pt; }
+.s2 { background: #1ABC9C; width: 45pt; }
+.s3 { background: #F39C12; width: 45pt; }
+.note { background: #FEF9E7; border-left: 3pt solid #F39C12; padding: 8pt 12pt; margin: 15pt 0 0 0; }
+.note p { color: #34495E; font-size: 10pt; margin: 0; }
+</style></head><body>
+<div class="header">
+  <h1>Review 三层分级机制（回答 Q4）</h1>
+  <div class="accent"></div>
+</div>
+<div class="content">
+  <div class="left">
+    <div class="layer l1">
+      <h2>第一层：AI 自动 Review（Lisa）</h2>
+      <p>代码风格、类型安全、已知反模式</p>
+      <p>测试覆盖检查、回归检测</p>
+    </div>
+    <div class="layer l2">
+      <h2>第二层：交叉模型 Review</h2>
+      <p>Claude 写 → Codex 审，不同盲区互补</p>
+      <p>捕获单模型无法发现的问题</p>
+    </div>
+    <div class="layer l3">
+      <h2>第三层：人工 Review（仅关键路径）</h2>
+      <p>核心业务逻辑、架构决策、安全敏感代码</p>
+      <p>人只需聚焦 15% 高风险变更</p>
+    </div>
+  </div>
+  <div class="right">
+    <h2>覆盖率分布</h2>
+    <div class="stat">
+      <div class="stat-bar s1"><p>~70%</p></div>
+      <p class="label">AI 自动拦截</p>
+    </div>
+    <div class="stat">
+      <div class="stat-bar s2"><p>15%</p></div>
+      <p class="label">交叉模型捕获</p>
+    </div>
+    <div class="stat">
+      <div class="stat-bar s3"><p>15%</p></div>
+      <p class="label">人工精准 Review</p>
+    </div>
+    <div class="note">
+      <p><b>结果：</b>人工 Review 工作量降低 85%，质量反而提升</p>
+    </div>
+  </div>
+</div>
+</body></html>

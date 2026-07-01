@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html><head><style>
+html { background: #FFFFFF; }
+body { width: 720pt; height: 405pt; margin: 0; padding: 0; font-family: Arial, sans-serif; display: flex; flex-direction: column; }
+.header { background: #1B2631; padding: 18pt 40pt; }
+.header h1 { color: #FFFFFF; font-size: 22pt; margin: 0; }
+.header .accent { width: 50pt; height: 3pt; background: #E74C3C; margin: 6pt 0 0 0; }
+.content { padding: 12pt 40pt; flex: 1; }
+.content h2 { color: #E74C3C; font-size: 14pt; margin: 0 0 8pt 0; }
+.table-wrap { width: 100%; }
+.row { display: flex; border-bottom: 1pt solid #ECF0F1; }
+.row-header { background: #1B2631; }
+.cell { flex: 1; padding: 7pt 12pt; }
+.cell-stage { flex: 0.8; }
+.cell-cause { flex: 1.2; }
+.cell-fix { flex: 1.5; }
+.row-header .cell p { color: #FFFFFF; font-size: 11pt; font-weight: bold; margin: 0; }
+.cell p { color: #34495E; font-size: 10pt; margin: 0; line-height: 1.4; }
+.cell .bold { font-weight: bold; color: #0D7377; }
+.bottom { display: flex; gap: 15pt; margin: 8pt 0 0 0; }
+.box-red { background: #FDEDEC; border-left: 4pt solid #E74C3C; padding: 8pt 14pt; flex: 1; }
+.box-green { background: #E8F8F5; border-left: 4pt solid #0D7377; padding: 8pt 14pt; flex: 1; }
+.box-red h3 { color: #E74C3C; font-size: 11pt; margin: 0 0 3pt 0; }
+.box-green h3 { color: #0D7377; font-size: 11pt; margin: 0 0 3pt 0; }
+.box-red p, .box-green p { color: #34495E; font-size: 9pt; margin: 1pt 0; }
+</style></head><body>
+<div class="header">
+  <h1>"前期提效、后期失控"的本质与解法（Q5）</h1>
+  <div class="accent"></div>
+</div>
+<div class="content">
+  <h2>本质：缺乏结构化约束，技术债累积速度远超人工开发</h2>
+  <div class="table-wrap">
+    <div class="row row-header">
+      <div class="cell cell-stage"><p>阶段</p></div>
+      <div class="cell cell-cause"><p>失控原因</p></div>
+      <div class="cell cell-fix"><p>RLL 约束机制</p></div>
+    </div>
+    <div class="row">
+      <div class="cell cell-stage"><p><b>早期</b></p></div>
+      <div class="cell cell-cause"><p>无 review 直接合并</p></div>
+      <div class="cell cell-fix"><p><span class="bold">Lisa 强制 review</span>，[NEEDS_WORK] 阻塞</p></div>
+    </div>
+    <div class="row">
+      <div class="cell cell-stage"><p><b>中期</b></p></div>
+      <div class="cell cell-cause"><p>测试缺失</p></div>
+      <div class="cell cell-fix"><p><span class="bold">[CODE] 必须包含测试结果</span>，否则被拒</p></div>
+    </div>
+    <div class="row">
+      <div class="cell cell-stage"><p><b>后期</b></p></div>
+      <div class="cell cell-cause"><p>架构腐化</p></div>
+      <div class="cell cell-fix"><p><span class="bold">第一轮强制 [PLAN]</span>，人审架构决策</p></div>
+    </div>
+    <div class="row">
+      <div class="cell cell-stage"><p><b>持续</b></p></div>
+      <div class="cell cell-cause"><p>知识丢失</p></div>
+      <div class="cell cell-fix"><p><span class="bold">每轮共识沉淀到 Memory</span></p></div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="box-red">
+      <h3>传统 AI 开发</h3>
+      <p>AI 写完直接用</p>
+      <p>Bug 后期集中爆发</p>
+      <p>维护成本指数增长</p>
+    </div>
+    <div class="box-green">
+      <h3>RLL 约束开发</h3>
+      <p>每行代码经过双 AI Review</p>
+      <p>问题前置拦截，债务不累积</p>
+      <p>知识自动沉淀，新人可接手</p>
+    </div>
+  </div>
+</div>
+</body></html>

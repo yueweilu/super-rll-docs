@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html><head><style>
+html { background: #FFFFFF; }
+body { width: 720pt; height: 405pt; margin: 0; padding: 0; font-family: Arial, sans-serif; display: flex; flex-direction: column; }
+.header { background: #1B2631; padding: 18pt 40pt; }
+.header h1 { color: #FFFFFF; font-size: 22pt; margin: 0; }
+.header .accent { width: 50pt; height: 3pt; background: #F39C12; margin: 6pt 0 0 0; }
+.content { display: flex; flex-direction: column; flex: 1; padding: 15pt 40pt; gap: 10pt; }
+.agents { display: flex; gap: 12pt; }
+.agent { flex: 1; background: #0D7377; border-radius: 8pt; padding: 12pt; text-align: center; }
+.agent h3 { color: #FFFFFF; font-size: 11pt; margin: 0 0 4pt 0; }
+.agent p { color: #D5F5E3; font-size: 9pt; margin: 2pt 0; }
+.arrow-down { text-align: center; }
+.arrow-down p { color: #BDC3C7; font-size: 16pt; margin: 0; }
+.platform { background: #F8F9FA; border: 2pt solid #0D7377; border-radius: 8pt; padding: 14pt 20pt; }
+.platform h3 { color: #0D7377; font-size: 14pt; margin: 0 0 8pt 0; text-align: center; }
+.features { display: flex; gap: 15pt; justify-content: center; }
+.feat { text-align: center; }
+.feat p { color: #34495E; font-size: 9pt; margin: 2pt 0; }
+.feat .name { font-weight: bold; color: #1B2631; font-size: 10pt; }
+.data-layer { background: #1B2631; border-radius: 8pt; padding: 12pt 20pt; display: flex; gap: 20pt; justify-content: center; }
+.data-item { text-align: center; }
+.data-item p { color: #A3E4D7; font-size: 9pt; margin: 2pt 0; }
+.data-item .name { color: #FFFFFF; font-weight: bold; font-size: 10pt; }
+</style></head><body>
+<div class="header">
+  <h1>Margay 平台架构：三层 Agent 体系</h1>
+  <div class="accent"></div>
+</div>
+<div class="content">
+  <div class="agents">
+    <div class="agent">
+      <h3>内容运营 Agent</h3>
+      <p>小红书选题/撰写/发布</p>
+      <p>竞品监控 + 日报</p>
+    </div>
+    <div class="agent">
+      <h3>客服智能化 Agent</h3>
+      <p>自助引导 / 夜间接待</p>
+      <p>全量质检 / 智能排班</p>
+    </div>
+    <div class="agent">
+      <h3>数据分析 Agent</h3>
+      <p>投放分析 / 订单复盘</p>
+      <p>用户调研 / 费用规划</p>
+    </div>
+    <div class="agent">
+      <h3>供应商管理 Agent</h3>
+      <p>OCR 二次校验</p>
+      <p>违章扣款审核</p>
+    </div>
+  </div>
+  <div class="arrow-down"><p>|</p></div>
+  <div class="platform">
+    <h3>Margay 平台层</h3>
+    <div class="features">
+      <div class="feat">
+        <p class="name">多模型接入</p>
+        <p>Claude / Codex / Gemini</p>
+      </div>
+      <div class="feat">
+        <p class="name">MCP 工具系统</p>
+        <p>对接内部 API</p>
+      </div>
+      <div class="feat">
+        <p class="name">Skill 系统</p>
+        <p>可复用业务能力</p>
+      </div>
+      <div class="feat">
+        <p class="name">Permission</p>
+        <p>细粒度权限控制</p>
+      </div>
+      <div class="feat">
+        <p class="name">Session 持久化</p>
+        <p>上下文不丢失</p>
+      </div>
+    </div>
+  </div>
+  <div class="arrow-down"><p>|</p></div>
+  <div class="data-layer">
+    <div class="data-item">
+      <p class="name">RAG 知识库</p>
+      <p>带权限过滤</p>
+    </div>
+    <div class="data-item">
+      <p class="name">内部 API Gateway</p>
+      <p>统一鉴权</p>
+    </div>
+    <div class="data-item">
+      <p class="name">数据脱敏网关</p>
+      <p>敏感数据过滤</p>
+    </div>
+  </div>
+</div>
+</body></html>

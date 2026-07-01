@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html><head><style>
+html { background: #FFFFFF; }
+body { width: 720pt; height: 405pt; margin: 0; padding: 0; font-family: Arial, sans-serif; display: flex; flex-direction: column; }
+.header { background: #1B2631; padding: 18pt 40pt; }
+.header h1 { color: #FFFFFF; font-size: 22pt; margin: 0; }
+.header .accent { width: 50pt; height: 3pt; background: #F39C12; margin: 6pt 0 0 0; }
+.content { display: flex; flex: 1; padding: 20pt 40pt; gap: 25pt; }
+.left { flex: 1; }
+.right { flex: 1; }
+.left h2 { color: #0D7377; font-size: 16pt; margin: 0 0 10pt 0; }
+.left p { color: #34495E; font-size: 11pt; margin: 3pt 0; line-height: 1.4; }
+.flow { display: flex; flex-direction: column; gap: 8pt; }
+.step { display: flex; align-items: center; gap: 10pt; }
+.step-num { background: #0D7377; color: #FFFFFF; font-size: 11pt; font-weight: bold; width: 24pt; height: 24pt; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.step-text { background: #F8F9FA; border-radius: 6pt; padding: 8pt 12pt; flex: 1; }
+.step-text p { color: #1B2631; font-size: 10pt; margin: 0; }
+.step-text .tag { color: #0D7377; font-weight: bold; }
+.divider { width: 2pt; height: 10pt; background: #BDC3C7; margin: 0 0 0 11pt; }
+.right h2 { color: #0D7377; font-size: 16pt; margin: 0 0 10pt 0; }
+.box { background: #EBF5FB; border-radius: 6pt; padding: 12pt; margin: 8pt 0; }
+.box p { color: #34495E; font-size: 10pt; margin: 2pt 0; }
+.highlight { color: #E74C3C; font-weight: bold; }
+</style></head><body>
+<div class="header">
+  <h1>Ralph-Lisa Loop：双 AI 交叉 Review</h1>
+  <div class="accent"></div>
+</div>
+<div class="content">
+  <div class="left">
+    <h2>Turn-Based 工作流</h2>
+    <div class="flow">
+      <div class="step">
+        <div class="step-num"><p>1</p></div>
+        <div class="step-text"><p><span class="tag">[PLAN]</span> Ralph 提交方案规划</p></div>
+      </div>
+      <div class="divider"></div>
+      <div class="step">
+        <div class="step-num"><p>2</p></div>
+        <div class="step-text"><p>Lisa 审核 → <span class="tag">[PASS]</span> 或 <span class="tag">[NEEDS_WORK]</span></p></div>
+      </div>
+      <div class="divider"></div>
+      <div class="step">
+        <div class="step-num"><p>3</p></div>
+        <div class="step-text"><p><span class="tag">[CODE]</span> Ralph 实现代码 + 测试</p></div>
+      </div>
+      <div class="divider"></div>
+      <div class="step">
+        <div class="step-num"><p>4</p></div>
+        <div class="step-text"><p>Lisa Review → 阻塞式质量门禁</p></div>
+      </div>
+      <div class="divider"></div>
+      <div class="step">
+        <div class="step-num"><p>5</p></div>
+        <div class="step-text"><p><span class="tag">[CONSENSUS]</span> 双方达成一致 → 进入下一步</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <h2>核心设计</h2>
+    <div class="box">
+      <p><b>交叉模型盲区互补</b></p>
+      <p>Ralph (Claude) 写 → Lisa (Codex) 审</p>
+      <p>不同模型 = 不同盲区 = 更高捕获率</p>
+    </div>
+    <div class="box">
+      <p><b>阻塞式 Review（非建议式）</b></p>
+      <p>[NEEDS_WORK] 直接阻塞合并</p>
+      <p>不通过 = 不能继续，杜绝"看一眼就过"</p>
+    </div>
+    <div class="box">
+      <p><b>40+ 轮持久化上下文</b></p>
+      <p>Lisa 记得之前所有讨论</p>
+      <p>Memory 机制自动沉淀每轮共识</p>
+    </div>
+  </div>
+</div>
+</body></html>

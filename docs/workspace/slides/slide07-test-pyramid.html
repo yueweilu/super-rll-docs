@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html><head><style>
+html { background: #FFFFFF; }
+body { width: 720pt; height: 405pt; margin: 0; padding: 0; font-family: Arial, sans-serif; display: flex; flex-direction: column; }
+.header { background: #1B2631; padding: 18pt 40pt; }
+.header h1 { color: #FFFFFF; font-size: 22pt; margin: 0; }
+.header .accent { width: 50pt; height: 3pt; background: #F39C12; margin: 6pt 0 0 0; }
+.content { display: flex; flex: 1; padding: 20pt 40pt; gap: 25pt; }
+.left { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 6pt; }
+.tier { border-radius: 6pt; padding: 10pt 14pt; display: flex; align-items: center; gap: 10pt; }
+.tier-label { color: #FFFFFF; font-size: 10pt; font-weight: bold; min-width: 24pt; }
+.tier p { color: #FFFFFF; font-size: 10pt; margin: 0; }
+.t0 { background: #27AE60; }
+.t1 { background: #2ECC71; }
+.t2 { background: #0D7377; }
+.t3 { background: #1ABC9C; }
+.t4 { background: #34495E; }
+.right { flex: 1; }
+.right h2 { color: #1B2631; font-size: 16pt; margin: 0 0 12pt 0; }
+.item { display: flex; gap: 8pt; margin: 6pt 0; align-items: flex-start; }
+.check { color: #27AE60; font-size: 12pt; margin: 0; font-weight: bold; min-width: 16pt; }
+.item p { color: #34495E; font-size: 10pt; margin: 0; line-height: 1.4; }
+.divider-line { height: 1pt; background: #ECF0F1; margin: 10pt 0; }
+.right h3 { color: #E74C3C; font-size: 13pt; margin: 0 0 8pt 0; }
+.anti { display: flex; gap: 8pt; margin: 4pt 0; align-items: flex-start; }
+.cross { color: #E74C3C; font-size: 12pt; margin: 0; font-weight: bold; min-width: 16pt; }
+</style></head><body>
+<div class="header">
+  <h1>测试金字塔与"伪覆盖"防治（Q6-Q8）</h1>
+  <div class="accent"></div>
+</div>
+<div class="content">
+  <div class="left">
+    <div class="tier t0">
+      <p class="tier-label">L0</p>
+      <p><b>单元测试</b> — AI 全自动生成</p>
+    </div>
+    <div class="tier t1">
+      <p class="tier-label">L1</p>
+      <p><b>模块集成</b> — AI 生成 + 人确认</p>
+    </div>
+    <div class="tier t2">
+      <p class="tier-label">L2</p>
+      <p><b>E2E Playwright</b> — 自动化关键路径</p>
+    </div>
+    <div class="tier t3">
+      <p class="tier-label">L3</p>
+      <p><b>AI 质量评估</b> — 模型输出评测</p>
+    </div>
+    <div class="tier t4">
+      <p class="tier-label">L4</p>
+      <p><b>浸泡/混沌</b> — 上线后持续跑</p>
+    </div>
+  </div>
+  <div class="right">
+    <h2>防"伪覆盖"三板斧</h2>
+    <div class="item">
+      <p class="check">1</p>
+      <p><b>关键路径优先</b> — 先定义 P0 路径（用户痛感最大的），再检查是否覆盖</p>
+    </div>
+    <div class="item">
+      <p class="check">2</p>
+      <p><b>状态矩阵</b> — 每个功能标记 verified / partial / unverified，不看百分比</p>
+    </div>
+    <div class="item">
+      <p class="check">3</p>
+      <p><b>变异测试</b> — 故意改代码看测试能否 catch，测试框架自动化</p>
+    </div>
+    <div class="divider-line"></div>
+    <h3>AI 可直接上线的测试</h3>
+    <div class="item">
+      <p class="check">+</p>
+      <p>接口契约测试、回归测试、性能基线</p>
+    </div>
+    <div class="anti">
+      <p class="cross">!</p>
+      <p>核心业务 E2E、安全测试 → 需人确认断言</p>
+    </div>
+  </div>
+</div>
+</body></html>
