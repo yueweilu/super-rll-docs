@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'docs/**'
+      - 'scripts/**'
       - '.github/workflows/docs-publish.yml'
   workflow_dispatch:
 
@@ -22,15 +23,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          source: docs/
-          destination: _site
+          node-version: 22
+      - name: Build static site
+        run: node scripts/build-site.mjs
+      - name: Verify generated site is publish-safe
+        run: |
+          test ! -e site/.DS_Store
+          ! find site -name '*.map' -print -quit | grep .
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
 
   deploy:
     needs: build

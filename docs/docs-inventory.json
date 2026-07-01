@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "generated_by": "scripts/generate-docs-inventory.mjs",
+  "product": "Super RLL",
+  "publisher": "Super RLL",
+  "languages": ["en", "zh-CN", "ja"],
+  "glossary": {
+    "RLL": { "en": "RLL", "zh-CN": "RLL", "ja": "RLL" },
+    "Ralph": { "en": "Ralph", "zh-CN": "Ralph", "ja": "Ralph" },
+    "Lisa": { "en": "Lisa", "zh-CN": "Lisa", "ja": "Lisa" },
+    "agent": { "en": "agent", "zh-CN": "智能体", "ja": "エージェント" },
+    "gate": { "en": "gate", "zh-CN": "门禁", "ja": "ゲート" },
+    "submit": { "en": "submit", "zh-CN": "提交", "ja": "サブミット" },
+    "review": { "en": "review", "zh-CN": "审阅", "ja": "レビュー" },
+    "test harness": { "en": "test harness", "zh-CN": "测试 harness", "ja": "テストハーネス" },
+    "attestation": { "en": "attestation", "zh-CN": "证明记录", "ja": "アテステーション" },
+    "consensus": { "en": "consensus", "zh-CN": "共识", "ja": "コンセンサス" }
+  },
+  "pages": [
+    {
+      "slug": "guide",
+      "group": "Start",
+      "page_type": "standard",
+      "nav_hidden": false,
+      "title": "User Guide"
+    },
+    {
+      "slug": "maintainer-handoff",
+      "group": "Start",
+      "page_type": "standard",
+      "nav_hidden": false,
+      "title": "Maintainer Handoff"
+    },
+    {
+      "slug": "reference",
+      "group": "Reference",
+      "page_type": "standard",
+      "nav_hidden": false,
+      "title": "CLI Reference"
+    },
+    {
+      "slug": "faq",
+      "group": "Reference",
+      "page_type": "standard",
+      "nav_hidden": false,
+      "title": "FAQ"
+    },
+    {
+      "slug": "testing",
+      "group": "Testing",
+      "page_type": "standard",
+      "nav_hidden": false,
+      "title": "Testing Guide"
+    },
+    {
+      "slug": "testing-plan",
+      "group": "Testing",
+      "page_type": "standard",
+      "nav_hidden": false,
+      "title": "Testing Plan"
+    },
+    {
+      "slug": "test-harness-and-gates",
+      "group": "Testing",
+      "page_type": "standard",
+      "nav_hidden": false,
+      "title": "Test Harness & Gates"
+    },
+    {
+      "slug": "changelog",
+      "group": "Meta",
+      "page_type": "standard",
+      "nav_hidden": false,
+      "title": "Changelog"
+    }
+  ]
+}
